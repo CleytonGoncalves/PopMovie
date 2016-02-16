@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Pop Movies</string>
+    <string name="action_settings">Settings</string>
+
+    <string-array name="image_ids">
+        <item>@drawable/sample_0</item>
+        <item>@drawable/sample_1</item>
+        <item>@drawable/sample_2</item>
+        <item>@drawable/sample_3</item>
+        <item>@drawable/sample_4</item>
+        <item>@drawable/sample_5</item>
+        <item>@drawable/sample_6</item>
+        <item>@drawable/sample_7</item>
+    </string-array>
+
+    <string-array name="movies_name">
+        <item>Sherlock Holmes: Game of Shadows</item>
+        <item>Project X</item>
+        <item>In Time</item>
+        <item>Ice Age 4</item>
+        <item>The Cabin in the Woods</item>
+        <item>The Grey</item>
+        <item>Mission Impossible: Ghost Protocol</item>
+        <item>Fight Club</item>
+    </string-array>
+    <string name="title_activity_main2">Main2Activity</string>
+
+</resources>
