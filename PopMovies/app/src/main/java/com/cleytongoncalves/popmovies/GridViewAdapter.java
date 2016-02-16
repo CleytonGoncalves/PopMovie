@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,29 +28,34 @@ public class GridViewAdapter extends ArrayAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v = convertView;
-        TextView name;
-        ImageView poster;
+        TextView name_view;
+        ImageView poster_view;
 
-        if (v == null) {
+        if (convertView == null) {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-            v = inflater.inflate(layoutResourceId, parent, false);
+            convertView = inflater.inflate(layoutResourceId, parent, false);
 
-            name = (TextView) v.findViewById(R.id.movie_name_textView);
-            poster = (ImageView) v.findViewById(R.id.movie_poster_imageView);
-
-            v.setTag(R.id.movie_name_textView, name);
-            v.setTag(R.id.movie_poster_imageView, poster);
-        } else {
-            name = (TextView) v.getTag(R.id.movie_name_textView);
-            poster = (ImageView) v.getTag(R.id.movie_poster_imageView);
+            convertView.setTag(R.id.movie_name_textView, convertView.findViewById(R.id.movie_name_textView));
+            convertView.setTag(R.id.movie_poster_imageView, convertView.findViewById(R.id.movie_poster_imageView));
         }
 
-        Item item = (Item) data.get(position);
-        name.setText(item.name);
-        poster.setImageResource(item.drawableId);
+        name_view = (TextView) convertView.getTag(R.id.movie_name_textView);
+        poster_view = (ImageView) convertView.getTag(R.id.movie_poster_imageView);
 
-        return v;
+        Item item = (Item) data.get(position);
+
+        Glide.with(parent.getContext())
+                .load(item.drawableId)
+                .override(300, 437)
+                .placeholder(R.drawable.placeholder_poster)
+                .error(R.drawable.error_poster)
+                .centerCrop()
+                .crossFade()
+                .into(poster_view);
+
+        name_view.setText(item.name);
+
+        return convertView;
     }
 
     protected static class Item {
