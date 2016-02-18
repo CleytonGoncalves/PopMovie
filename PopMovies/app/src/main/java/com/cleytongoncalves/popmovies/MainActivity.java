@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
+//    API KEY: 7ca7df9023524265afdf4479d07c4ad0
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

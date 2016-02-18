@@ -7,20 +7,21 @@
         android:id="@+id/movie_poster_imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop" />
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"/>
 
     <TextView
         android:id="@+id/movie_name_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:background="#e1000000"
         android:paddingBottom="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="10dp"
         android:singleLine="true"
         android:textColor="@android:color/white"
-        android:background="#e1000000"
         android:textStyle="bold" />
 
 </FrameLayout>

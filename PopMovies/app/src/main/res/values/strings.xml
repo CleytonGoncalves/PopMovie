@@ -23,6 +23,8 @@
         <item>Mission Impossible: Ghost Protocol</item>
         <item>Fight Club</item>
     </string-array>
-    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="title_activity_detail">MovieDetail</string>
+
 
 </resources>

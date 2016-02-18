@@ -27,13 +27,13 @@ public class GridFragment extends Fragment {
         return rootView;
     }
 
-    private List<GridViewAdapter.Item> createDummyData() {
-        List<GridViewAdapter.Item> items = new ArrayList<>();
+    private List<Movie> createDummyData() {
+        List<Movie> items = new ArrayList<>();
         TypedArray imgs = getResources().obtainTypedArray(R.array.image_ids);
 
         for (int i = 0; i < imgs.length(); i++) {
             int imageId = imgs.getResourceId(i, -1);
-            items.add(new GridViewAdapter.Item(getResources().getStringArray(R.array.movies_name)[i], imageId));
+            items.add(new Movie(getResources().getStringArray(R.array.movies_name)[i], imageId, "2016", "6.6/10", "When her family is gunned down in cold blood, a young girl convinces a bounty hunter to train her as a gunfighter so she can seek vengeance with a six-shooter."));
         }
 
         return items;

@@ -42,11 +42,10 @@ public class GridViewAdapter extends ArrayAdapter {
         name_view = (TextView) convertView.getTag(R.id.movie_name_textView);
         poster_view = (ImageView) convertView.getTag(R.id.movie_poster_imageView);
 
-        Item item = (Item) data.get(position);
+        Movie item = (Movie) data.get(position);
 
         Glide.with(parent.getContext())
                 .load(item.drawableId)
-                .override(300, 437)
                 .placeholder(R.drawable.placeholder_poster)
                 .error(R.drawable.error_poster)
                 .centerCrop()
@@ -56,15 +55,5 @@ public class GridViewAdapter extends ArrayAdapter {
         name_view.setText(item.name);
 
         return convertView;
-    }
-
-    protected static class Item {
-        private final String name;
-        private final int drawableId;
-
-        public Item(String name, int drawableId) {
-            this.name = name;
-            this.drawableId = drawableId;
-        }
     }
 }
