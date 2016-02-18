@@ -1,4 +1,4 @@
-package com.cleytongoncalves.popmovies;
+package com.cleytongoncalves.popmovies.ui.mainscreen;
 
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -10,21 +10,29 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.cleytongoncalves.popmovies.R;
+import com.cleytongoncalves.popmovies.ui.MovieDataFetcher;
+import com.cleytongoncalves.popmovies.ui.detailscreen.DetailActivity;
+import com.cleytongoncalves.popmovies.ui.models.Movie;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class GridFragment extends Fragment {
+public class MainFragment extends Fragment {
     private List<Movie> mMovies;
 
-    public GridFragment() {
+    public MainFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.grid_view_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         createDummyData();
+
+        MovieDataFetcher movieTask = new MovieDataFetcher();
+        movieTask.execute(movieTask.SORT_POPULARITY);
 
         GridViewAdapter gridAdapter = new GridViewAdapter(rootView.getContext(), R.layout.grid_item_view, mMovies);
 

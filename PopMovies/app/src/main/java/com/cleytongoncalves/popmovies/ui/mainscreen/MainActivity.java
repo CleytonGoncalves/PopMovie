@@ -1,4 +1,4 @@
-package com.cleytongoncalves.popmovies;
+package com.cleytongoncalves.popmovies.ui.mainscreen;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,8 +6,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.cleytongoncalves.popmovies.R;
+
 public class MainActivity extends AppCompatActivity {
-//    API KEY: 7ca7df9023524265afdf4479d07c4ad0
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

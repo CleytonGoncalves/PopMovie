@@ -1,4 +1,4 @@
-package com.cleytongoncalves.popmovies;
+package com.cleytongoncalves.popmovies.ui.mainscreen;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.cleytongoncalves.popmovies.ui.models.Movie;
+import com.cleytongoncalves.popmovies.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +47,7 @@ public class GridViewAdapter extends ArrayAdapter {
         Movie item = (Movie) data.get(position);
 
         Glide.with(parent.getContext())
-                .load(item.drawableId)
+                .load(item.posterPath)
                 .placeholder(R.drawable.placeholder_poster)
                 .error(R.drawable.error_poster)
                 .centerCrop()
