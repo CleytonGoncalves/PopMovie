@@ -78,7 +78,7 @@ public class MainFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_mainfragment, menu);
+        inflater.inflate(R.menu.menu_main_fragment, menu);
 
         MenuItem menu_sort_popularity = menu.findItem(R.id.menu_sort_popularity);
         MenuItem menu_sort_rating = menu.findItem(R.id.menu_sort_rating);
