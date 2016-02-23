@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -31,19 +34,24 @@ import java.util.Arrays;
 
 public class MainFragment extends Fragment {
     private GridViewAdapter mMoviesAdapter;
+    private String mSortBy = MovieDataFetcher.SORT_POPULARITY;
 
     public MainFragment() {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+
+        mMoviesAdapter = new GridViewAdapter(getActivity(), R.layout.grid_item_view, new
+                ArrayList<Movie>());
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
+            savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-
-        MovieDataFetcher movieTask = new MovieDataFetcher();
-        movieTask.execute(movieTask.SORT_POPULARITY);
-
-        mMoviesAdapter = new GridViewAdapter(rootView.getContext(), R.layout.grid_item_view, new ArrayList<Movie>());
 
         GridView gridView = (GridView) rootView.findViewById(R.id.grid_view);
         gridView.setAdapter(mMoviesAdapter);
@@ -53,13 +61,63 @@ public class MainFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Movie movieClicked = (Movie) mMoviesAdapter.getItem(position);
 
-                Intent intent = new Intent(getActivity(), DetailActivity.class)
-                        .putExtra("movie", movieClicked);
+                Intent intent = new Intent(getActivity(), DetailActivity.class).putExtra("movie",
+                        movieClicked);
                 startActivity(intent);
             }
         });
 
         return rootView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        updateMovies();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_mainfragment, menu);
+
+        MenuItem menu_sort_popularity = menu.findItem(R.id.menu_sort_popularity);
+        MenuItem menu_sort_rating = menu.findItem(R.id.menu_sort_rating);
+
+        if (mSortBy == MovieDataFetcher.SORT_RATING) {
+            if (!menu_sort_rating.isChecked()) {
+                menu_sort_rating.setChecked(true);
+            }
+        } else {
+            if (!menu_sort_popularity.isChecked()) {
+                menu_sort_popularity.setChecked(true);
+            }
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.menu_sort_popularity:
+                item.setChecked(true);
+                mSortBy = MovieDataFetcher.SORT_POPULARITY;
+                updateMovies();
+                break;
+
+            case R.id.menu_sort_rating:
+                item.setChecked(true);
+                mSortBy = MovieDataFetcher.SORT_RATING;
+                updateMovies();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void updateMovies() {
+        MovieDataFetcher movieTask = new MovieDataFetcher();
+        movieTask.execute(mSortBy);
     }
 
     /*****
@@ -69,8 +127,8 @@ public class MainFragment extends Fragment {
         private final String LOG_TAG = MovieDataFetcher.class.getSimpleName();
         private final String API_KEY = "7ca7df9023524265afdf4479d07c4ad0";
 
-        public final String SORT_POPULARITY = "0";
-        public final String SORT_RATING = "1";
+        public static final String SORT_POPULARITY = "0";
+        public static final String SORT_RATING = "1";
 
         @Override
         protected Movie[] doInBackground(String... params) {
@@ -79,7 +137,8 @@ public class MainFragment extends Fragment {
                 return null;
             }
 
-            //Must be declared outside, because if a error happens anytime after their declaration, it would remain open
+            //Must be declared outside, because if a error happens anytime after their
+            // declaration, it would remain open
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
 
@@ -91,12 +150,12 @@ public class MainFragment extends Fragment {
                 final String SORT_PARAM = "sort_by";
                 final String API_PARAM = "api_key";
 
-                Uri builtUri = Uri.parse(BASE_URL).buildUpon()
-                        .appendQueryParameter(SORT_PARAM, params[0] == SORT_RATING ? "vote_average.desc" : "popularity.desc")
-                        .appendQueryParameter(API_PARAM, API_KEY)
-                        .build();
+                Uri builtUri = Uri.parse(BASE_URL).buildUpon().appendQueryParameter(SORT_PARAM,
+                        params[0] == SORT_RATING ? "vote_average.desc" : "popularity.desc")
+                        .appendQueryParameter(API_PARAM, API_KEY).build();
 
                 URL theMovieDb = new URL(builtUri.toString());
+                Log.d(LOG_TAG, theMovieDb.toString());
 
                 //Create the request and open connection
                 urlConnection = (HttpURLConnection) theMovieDb.openConnection();
@@ -181,7 +240,11 @@ public class MainFragment extends Fragment {
         }
 
         private String extractYear(String releaseDate) {
-            return releaseDate.substring(0, 4);
+            try {
+                return releaseDate.substring(0, 4);
+            } catch (StringIndexOutOfBoundsException e) {
+                return "----";
+            }
         }
 
         @Override
