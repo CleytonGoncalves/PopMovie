@@ -33,8 +33,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MainFragment extends Fragment {
+    private final String SORT_POPULARITY = MovieDataFetcher.SORT_POPULARITY;
+    private final String SORT_RATING = MovieDataFetcher.SORT_RATING;
+
     private GridViewAdapter mMoviesAdapter;
-    private String mSortBy = MovieDataFetcher.SORT_POPULARITY;
+    private String mSortBy = SORT_POPULARITY;
 
     public MainFragment() {
     }
@@ -83,7 +86,7 @@ public class MainFragment extends Fragment {
         MenuItem menu_sort_popularity = menu.findItem(R.id.menu_sort_popularity);
         MenuItem menu_sort_rating = menu.findItem(R.id.menu_sort_rating);
 
-        if (mSortBy == MovieDataFetcher.SORT_RATING) {
+        if (mSortBy == SORT_RATING) {
             if (!menu_sort_rating.isChecked()) {
                 menu_sort_rating.setChecked(true);
             }
@@ -101,15 +104,15 @@ public class MainFragment extends Fragment {
         switch (id) {
             case R.id.menu_sort_popularity:
                 item.setChecked(true);
-                mSortBy = MovieDataFetcher.SORT_POPULARITY;
+                mSortBy = SORT_POPULARITY;
                 updateMovies();
-                break;
+                return true;
 
             case R.id.menu_sort_rating:
                 item.setChecked(true);
-                mSortBy = MovieDataFetcher.SORT_RATING;
+                mSortBy = SORT_RATING;
                 updateMovies();
-                break;
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -127,8 +130,8 @@ public class MainFragment extends Fragment {
         private final String LOG_TAG = MovieDataFetcher.class.getSimpleName();
         private final String API_KEY = "7ca7df9023524265afdf4479d07c4ad0";
 
-        public static final String SORT_POPULARITY = "0";
-        public static final String SORT_RATING = "1";
+        public static final String SORT_POPULARITY = "vote_average.desc";
+        public static final String SORT_RATING = "popularity.desc";
 
         @Override
         protected Movie[] doInBackground(String... params) {
@@ -150,9 +153,10 @@ public class MainFragment extends Fragment {
                 final String SORT_PARAM = "sort_by";
                 final String API_PARAM = "api_key";
 
-                Uri builtUri = Uri.parse(BASE_URL).buildUpon().appendQueryParameter(SORT_PARAM,
-                        params[0] == SORT_RATING ? "vote_average.desc" : "popularity.desc")
-                        .appendQueryParameter(API_PARAM, API_KEY).build();
+                Uri builtUri = Uri.parse(BASE_URL).buildUpon()
+                        .appendQueryParameter(SORT_PARAM, params[0])
+                        .appendQueryParameter(API_PARAM, API_KEY)
+                        .build();
 
                 URL theMovieDb = new URL(builtUri.toString());
                 Log.d(LOG_TAG, theMovieDb.toString());
