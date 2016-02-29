@@ -13,38 +13,49 @@ import com.bumptech.glide.Glide;
 import com.cleytongoncalves.popmovies.R;
 import com.cleytongoncalves.popmovies.ui.models.Movie;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 
 public class DetailFragment extends Fragment {
-
-    private Movie mMovie;
-
-    public DetailFragment() {
-    }
+    @Bind(R.id.movie_name_detail) TextView name;
+    @Bind(R.id.movie_release_year_detail) TextView releaseYear;
+    @Bind(R.id.movie_rating_detail) TextView rating;
+    @Bind(R.id.movie_overview_detail) TextView overview;
+    @Bind(R.id.movie_poster_detail) ImageView poster;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
 
+        ButterKnife.bind(this, rootView);
+
         Intent callerIntent = getActivity().getIntent();
 
         if (callerIntent != null && callerIntent.hasExtra("movie")) {
-            mMovie = callerIntent.getParcelableExtra("movie");
+            final Movie movie = callerIntent.getParcelableExtra("movie");
 
-            ((TextView) rootView.findViewById(R.id.movie_name_detail)).setText(mMovie.name);
-            ((TextView) rootView.findViewById(R.id.movie_release_year_detail)).setText(mMovie.releaseYear);
-            ((TextView) rootView.findViewById(R.id.movie_rating_detail)).setText(mMovie.rating);
-            ((TextView) rootView.findViewById(R.id.movie_overview_detail)).setText(mMovie.overview);
+            name.setText(movie.name);
+            releaseYear.setText(movie.releaseYear);
+            rating.setText(movie.rating);
+            overview.setText(movie.overview);
+
             Glide.with(this)
-                    .load(mMovie.posterPath)
+                    .load(movie.posterPath)
                     .placeholder(R.drawable.placeholder_poster)
                     .error(R.drawable.error_poster)
                     .centerCrop()
                     .crossFade()
-                    .into((ImageView) rootView.findViewById(R.id.movie_poster_detail));
+                    .into(poster);
         }
 
         return rootView;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
 }
