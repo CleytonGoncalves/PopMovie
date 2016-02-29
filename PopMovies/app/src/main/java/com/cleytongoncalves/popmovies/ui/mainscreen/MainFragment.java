@@ -37,11 +37,8 @@ import butterknife.ButterKnife;
 import butterknife.OnItemClick;
 
 public class MainFragment extends Fragment {
-    private final String SORT_POPULARITY = MovieDataFetcher.SORT_POPULARITY;
-    private final String SORT_RATING = MovieDataFetcher.SORT_RATING;
-
     private GridViewAdapter mMoviesAdapter;
-    private String mSortBy = SORT_POPULARITY;
+    private Sort mSortBy = Sort.POPULARITY;
 
     @Bind(R.id.grid_view) GridView gridView;
 
@@ -95,7 +92,7 @@ public class MainFragment extends Fragment {
         MenuItem menu_sort_popularity = menu.findItem(R.id.menu_sort_popularity);
         MenuItem menu_sort_rating = menu.findItem(R.id.menu_sort_rating);
 
-        if (mSortBy == SORT_RATING) {
+        if (mSortBy == Sort.RATING) {
             if (!menu_sort_rating.isChecked()) {
                 menu_sort_rating.setChecked(true);
             }
@@ -113,13 +110,13 @@ public class MainFragment extends Fragment {
         switch (id) {
             case R.id.menu_sort_popularity:
                 item.setChecked(true);
-                mSortBy = SORT_POPULARITY;
+                mSortBy = Sort.POPULARITY;
                 updateMovies();
                 return true;
 
             case R.id.menu_sort_rating:
                 item.setChecked(true);
-                mSortBy = SORT_RATING;
+                mSortBy = Sort.RATING;
                 updateMovies();
                 return true;
         }
@@ -133,16 +130,27 @@ public class MainFragment extends Fragment {
     }
 
     /*****
+     * SORTING VALUE TO MovieDataFetcher.SORT_PARAM
+     *****/
+    private enum Sort {
+        POPULARITY ("popularity.desc"),
+        RATING ("vote_average.desc");
+
+        private final String value;
+
+        Sort(String value) {
+            this.value = value;
+        }
+    }
+
+    /*****
      * INNER-CLASS TO DO BACKGROUND FETCHING AND PARSING OF THE DATA
-     */
-    class MovieDataFetcher extends AsyncTask<String, Void, Movie[]> {
+     *****/
+    class MovieDataFetcher extends AsyncTask<Sort, Void, Movie[]> {
         private final String LOG_TAG = MovieDataFetcher.class.getSimpleName();
 
-        public static final String SORT_POPULARITY = "popularity.desc";
-        public static final String SORT_RATING = "vote_average.desc";
-
         @Override
-        protected Movie[] doInBackground(String... params) {
+        protected Movie[] doInBackground(Sort... params) {
 
             if (params.length == 0) {
                 return null;
@@ -162,8 +170,9 @@ public class MainFragment extends Fragment {
                 final String API_PARAM = "api_key";
 
                 Uri builtUri = Uri.parse(BASE_URL).buildUpon()
-                        .appendQueryParameter(SORT_PARAM, params[0])
-                        .appendQueryParameter(API_PARAM, BuildConfig.TMDB_API_KEY).build();
+                        .appendQueryParameter(SORT_PARAM, params[0].value)
+                        .appendQueryParameter(API_PARAM, BuildConfig.TMDB_API_KEY)
+                        .build();
 
                 URL theMovieDb = new URL(builtUri.toString());
 
