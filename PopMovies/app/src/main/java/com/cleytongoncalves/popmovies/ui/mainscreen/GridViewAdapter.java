@@ -23,8 +23,6 @@ public class GridViewAdapter extends ArrayAdapter {
     private int layoutResourceId;
     private List data;
 
-
-
     public GridViewAdapter(Context context, int resource, List objects) {
         super(context, resource, objects);
         this.context = context;
