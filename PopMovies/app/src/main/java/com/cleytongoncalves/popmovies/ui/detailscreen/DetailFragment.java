@@ -43,6 +43,7 @@ public class DetailFragment extends Fragment {
 
             Glide.with(this)
                     .load(movie.posterPath)
+                    .thumbnail(0.1f)
                     .placeholder(R.drawable.placeholder_poster)
                     .error(R.drawable.error_poster)
                     .centerCrop()
