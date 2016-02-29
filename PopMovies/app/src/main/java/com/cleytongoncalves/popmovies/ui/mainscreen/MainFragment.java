@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.cleytongoncalves.popmovies.BuildConfig;
@@ -37,8 +38,11 @@ import butterknife.ButterKnife;
 import butterknife.OnItemClick;
 
 public class MainFragment extends Fragment {
+    private final String SORT_POPULARITY = MovieDataFetcher.SORT_POPULARITY;
+    private final String SORT_RATING = MovieDataFetcher.SORT_RATING;
+
     private GridViewAdapter mMoviesAdapter;
-    private String mSortBy = MovieDataFetcher.SORT_POPULARITY;
+    private String mSortBy = SORT_POPULARITY;
 
     @Bind(R.id.grid_view) GridView gridView;
 
@@ -91,12 +95,12 @@ public class MainFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_mainfragment, menu);
+        inflater.inflate(R.menu.menu_main_fragment, menu);
 
         MenuItem menu_sort_popularity = menu.findItem(R.id.menu_sort_popularity);
         MenuItem menu_sort_rating = menu.findItem(R.id.menu_sort_rating);
 
-        if (mSortBy == MovieDataFetcher.SORT_RATING) {
+        if (mSortBy == SORT_RATING) {
             if (!menu_sort_rating.isChecked()) {
                 menu_sort_rating.setChecked(true);
             }
@@ -114,15 +118,15 @@ public class MainFragment extends Fragment {
         switch (id) {
             case R.id.menu_sort_popularity:
                 item.setChecked(true);
-                mSortBy = MovieDataFetcher.SORT_POPULARITY;
+                mSortBy = SORT_POPULARITY;
                 updateMovies();
-                break;
+                return true;
 
             case R.id.menu_sort_rating:
                 item.setChecked(true);
-                mSortBy = MovieDataFetcher.SORT_RATING;
+                mSortBy = SORT_RATING;
                 updateMovies();
-                break;
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -139,8 +143,8 @@ public class MainFragment extends Fragment {
     class MovieDataFetcher extends AsyncTask<String, Void, Movie[]> {
         private final String LOG_TAG = MovieDataFetcher.class.getSimpleName();
 
-        public static final String SORT_POPULARITY = "0";
-        public static final String SORT_RATING = "1";
+        public static final String SORT_POPULARITY = "vote_average.desc";
+        public static final String SORT_RATING = "popularity.desc";
 
         @Override
         protected Movie[] doInBackground(String... params) {
@@ -163,11 +167,12 @@ public class MainFragment extends Fragment {
                 final String API_PARAM = "api_key";
 
                 Uri builtUri = Uri.parse(BASE_URL).buildUpon()
-                        .appendQueryParameter(SORT_PARAM, params[0] == SORT_RATING ? "vote_average.desc" : "popularity.desc")
+                        .appendQueryParameter(SORT_PARAM, params[0])
                         .appendQueryParameter(API_PARAM, BuildConfig.TMDB_API_KEY)
                         .build();
 
                 URL theMovieDb = new URL(builtUri.toString());
+                Log.d(LOG_TAG, theMovieDb.toString());
 
                 //Create the request and open connection
                 urlConnection = (HttpURLConnection) theMovieDb.openConnection();
