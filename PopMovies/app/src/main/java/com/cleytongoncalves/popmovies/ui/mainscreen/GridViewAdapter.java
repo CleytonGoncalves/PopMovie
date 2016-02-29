@@ -10,16 +10,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.cleytongoncalves.popmovies.ui.models.Movie;
 import com.cleytongoncalves.popmovies.R;
+import com.cleytongoncalves.popmovies.ui.models.Movie;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class GridViewAdapter extends ArrayAdapter {
     private Context context;
     private int layoutResourceId;
     private List data = new ArrayList();
+
+
 
     public GridViewAdapter(Context context, int resource, List objects) {
         super(context, resource, objects);
@@ -30,19 +35,17 @@ public class GridViewAdapter extends ArrayAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        TextView name_view;
-        ImageView poster_view;
+        ViewHolder holder;
 
         if (convertView == null) {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             convertView = inflater.inflate(layoutResourceId, parent, false);
 
-            convertView.setTag(R.id.movie_name_textView, convertView.findViewById(R.id.movie_name_textView));
-            convertView.setTag(R.id.movie_poster_imageView, convertView.findViewById(R.id.movie_poster_imageView));
+            holder = new ViewHolder(convertView);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
-
-        name_view = (TextView) convertView.getTag(R.id.movie_name_textView);
-        poster_view = (ImageView) convertView.getTag(R.id.movie_poster_imageView);
 
         Movie item = (Movie) data.get(position);
 
@@ -52,10 +55,19 @@ public class GridViewAdapter extends ArrayAdapter {
                 .error(R.drawable.error_poster)
                 .centerCrop()
                 .crossFade()
-                .into(poster_view);
+                .into(holder.posterView);
 
-        name_view.setText(item.name);
+        holder.name.setText(item.name);
 
         return convertView;
+    }
+
+    static class ViewHolder {
+        @Bind(R.id.movie_poster_imageView) ImageView posterView;
+        @Bind(R.id.movie_name_textView) TextView name;
+
+        private ViewHolder(View convertView) {
+            ButterKnife.bind(this, convertView);
+        }
     }
 }
