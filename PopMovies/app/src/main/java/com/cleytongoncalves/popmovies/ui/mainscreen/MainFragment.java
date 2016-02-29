@@ -12,9 +12,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.cleytongoncalves.popmovies.BuildConfig;
 import com.cleytongoncalves.popmovies.R;
 import com.cleytongoncalves.popmovies.ui.detailscreen.DetailActivity;
 import com.cleytongoncalves.popmovies.ui.models.Movie;
@@ -32,9 +32,16 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnItemClick;
+
 public class MainFragment extends Fragment {
     private GridViewAdapter mMoviesAdapter;
     private String mSortBy = MovieDataFetcher.SORT_POPULARITY;
+
+    @Bind(R.id.grid_view) GridView gridView;
+
 
     public MainFragment() {
     }
@@ -53,21 +60,27 @@ public class MainFragment extends Fragment {
             savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        GridView gridView = (GridView) rootView.findViewById(R.id.grid_view);
+        ButterKnife.bind(this, rootView);
+
         gridView.setAdapter(mMoviesAdapter);
 
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Movie movieClicked = (Movie) mMoviesAdapter.getItem(position);
-
-                Intent intent = new Intent(getActivity(), DetailActivity.class).putExtra("movie",
-                        movieClicked);
-                startActivity(intent);
-            }
-        });
-
         return rootView;
+    }
+
+    @OnItemClick(R.id.grid_view)
+    protected void onItemClick(int position) {
+        Movie movieClicked = (Movie) mMoviesAdapter.getItem(position);
+
+        Intent intent = new Intent(getActivity(), DetailActivity.class)
+                .putExtra("movie", movieClicked);
+
+        startActivity(intent);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 
     @Override
@@ -125,7 +138,6 @@ public class MainFragment extends Fragment {
      */
     class MovieDataFetcher extends AsyncTask<String, Void, Movie[]> {
         private final String LOG_TAG = MovieDataFetcher.class.getSimpleName();
-        private final String API_KEY = "7ca7df9023524265afdf4479d07c4ad0";
 
         public static final String SORT_POPULARITY = "0";
         public static final String SORT_RATING = "1";
@@ -150,12 +162,12 @@ public class MainFragment extends Fragment {
                 final String SORT_PARAM = "sort_by";
                 final String API_PARAM = "api_key";
 
-                Uri builtUri = Uri.parse(BASE_URL).buildUpon().appendQueryParameter(SORT_PARAM,
-                        params[0] == SORT_RATING ? "vote_average.desc" : "popularity.desc")
-                        .appendQueryParameter(API_PARAM, API_KEY).build();
+                Uri builtUri = Uri.parse(BASE_URL).buildUpon()
+                        .appendQueryParameter(SORT_PARAM, params[0] == SORT_RATING ? "vote_average.desc" : "popularity.desc")
+                        .appendQueryParameter(API_PARAM, BuildConfig.TMDB_API_KEY)
+                        .build();
 
                 URL theMovieDb = new URL(builtUri.toString());
-                Log.d(LOG_TAG, theMovieDb.toString());
 
                 //Create the request and open connection
                 urlConnection = (HttpURLConnection) theMovieDb.openConnection();
