@@ -12,7 +12,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.cleytongoncalves.popmovies.BuildConfig;
@@ -45,10 +44,6 @@ public class MainFragment extends Fragment {
     private String mSortBy = SORT_POPULARITY;
 
     @Bind(R.id.grid_view) GridView gridView;
-
-
-    public MainFragment() {
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -143,8 +138,8 @@ public class MainFragment extends Fragment {
     class MovieDataFetcher extends AsyncTask<String, Void, Movie[]> {
         private final String LOG_TAG = MovieDataFetcher.class.getSimpleName();
 
-        public static final String SORT_POPULARITY = "vote_average.desc";
-        public static final String SORT_RATING = "popularity.desc";
+        public static final String SORT_POPULARITY = "popularity.desc";
+        public static final String SORT_RATING = "vote_average.desc";
 
         @Override
         protected Movie[] doInBackground(String... params) {
@@ -168,11 +163,9 @@ public class MainFragment extends Fragment {
 
                 Uri builtUri = Uri.parse(BASE_URL).buildUpon()
                         .appendQueryParameter(SORT_PARAM, params[0])
-                        .appendQueryParameter(API_PARAM, BuildConfig.TMDB_API_KEY)
-                        .build();
+                        .appendQueryParameter(API_PARAM, BuildConfig.TMDB_API_KEY).build();
 
                 URL theMovieDb = new URL(builtUri.toString());
-                Log.d(LOG_TAG, theMovieDb.toString());
 
                 //Create the request and open connection
                 urlConnection = (HttpURLConnection) theMovieDb.openConnection();
