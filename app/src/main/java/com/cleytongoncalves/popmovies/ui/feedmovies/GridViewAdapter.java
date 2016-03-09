@@ -1,4 +1,4 @@
-package com.cleytongoncalves.popmovies.ui.mainscreen;
+package com.cleytongoncalves.popmovies.ui.feedmovies;
 
 import android.app.Activity;
 import android.content.Context;
@@ -48,7 +48,6 @@ public class GridViewAdapter extends ArrayAdapter {
 
         Glide.with(parent.getContext())
                 .load(item.posterPath)
-                .thumbnail(0.1f)
                 .placeholder(R.drawable.placeholder_poster)
                 .error(R.drawable.error_poster)
                 .centerCrop()

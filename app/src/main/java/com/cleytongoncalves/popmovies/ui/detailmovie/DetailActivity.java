@@ -1,4 +1,4 @@
-package com.cleytongoncalves.popmovies.ui.detailscreen;
+package com.cleytongoncalves.popmovies.ui.detailmovie;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

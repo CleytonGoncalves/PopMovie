@@ -1,4 +1,4 @@
-package com.cleytongoncalves.popmovies.ui.detailscreen;
+package com.cleytongoncalves.popmovies.ui.detailmovie;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -43,7 +43,6 @@ public class DetailFragment extends Fragment {
 
             Glide.with(this)
                     .load(movie.posterPath)
-                    .thumbnail(0.1f)
                     .placeholder(R.drawable.placeholder_poster)
                     .error(R.drawable.error_poster)
                     .centerCrop()

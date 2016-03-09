@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.mainscreen.MainActivity"
+            android:name=".ui.feedmovies.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -22,13 +22,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.detailscreen.DetailActivity"
+            android:name=".ui.detailmovie.DetailActivity"
             android:label="@string/title_activity_detail"
-            android:parentActivityName=".ui.mainscreen.MainActivity"
+            android:parentActivityName=".ui.feedmovies.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.mainscreen.MainActivity"/>
+                android:value=".ui.feedmovies.MainActivity"/>
         </activity>
     </application>
 

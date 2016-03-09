@@ -3,7 +3,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              tools:context=".ui.detailscreen.DetailFragment"
+              tools:context=".ui.detailmovie.DetailFragment"
               tools:showIn="@layout/activity_detail">
 
     <!-- Movie name on Top bar-->

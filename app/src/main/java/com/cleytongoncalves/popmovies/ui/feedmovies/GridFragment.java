@@ -1,4 +1,4 @@
-package com.cleytongoncalves.popmovies.ui.mainscreen;
+package com.cleytongoncalves.popmovies.ui.feedmovies;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -16,7 +16,7 @@ import android.widget.GridView;
 
 import com.cleytongoncalves.popmovies.BuildConfig;
 import com.cleytongoncalves.popmovies.R;
-import com.cleytongoncalves.popmovies.ui.detailscreen.DetailActivity;
+import com.cleytongoncalves.popmovies.ui.detailmovie.DetailActivity;
 import com.cleytongoncalves.popmovies.ui.models.Movie;
 
 import org.json.JSONArray;
@@ -36,7 +36,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
 
-public class MainFragment extends Fragment {
+public class GridFragment extends Fragment {
     private GridViewAdapter mMoviesAdapter;
     private Sort mSortBy = Sort.POPULARITY;
 
