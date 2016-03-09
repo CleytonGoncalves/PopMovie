@@ -1,19 +1,32 @@
 apply plugin: 'com.android.application'
 
+ext.versionMajor = 1
+ext.versionMinor = 0
+ext.versionPatch = 0
+ext.versionClassifier = "SNAPSHOT"
+
+ext.minimumSdkVersion = 15
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "com.cleytongoncalves.popmovies"
-        minSdkVersion 15
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion project.ext.minimumSdkVersion
+        versionCode generateVersionCode() // 150010203 = minApi 15, GL 0, MAJOR 01, MINOR 02, PATCH 03
+        versionName generateVersionName() // 1.2.3-SNAPSHOT
     }
     buildTypes {
-        release {
+        debug {
+            debuggable true
             minifyEnabled false
+            buildConfigField("boolean", "ENABLE_DEBUG_TOOLS", "true")
+        }
+        release {
+            debuggable false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -23,6 +36,18 @@ android {
     }
 }
 
+private Integer generateVersionCode() {
+    return ext.minimumSdkVersion * 10000000 + ext.versionMajor * 10000 + ext.versionMinor * 100 + ext.versionPatch
+}
+
+private String generateVersionName() {
+    String versionName = "${ext.versionMajor}.${ext.versionMinor}.${ext.versionPatch}"
+    if (ext.versionClassifier != null && !ext.versionClassifier.isEmpty()) {
+        versionName = versionName + "-" + ext.versionClassifier
+    }
+    return versionName;
+}
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
@@ -30,5 +55,10 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     compile 'com.android.support:support-v4:23.1.1'
     compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+
+    //ButterKnife
+    compile 'com.jakewharton:butterknife:7.0.1'
+    //Glide
     compile 'com.github.bumptech.glide:glide:3.7.0'
 }
