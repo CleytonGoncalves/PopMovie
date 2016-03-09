@@ -1,0 +1,27 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context=".ui.feedmovies.GridFragment">
+
+    <item
+        android:id="@+id/menu_sort"
+        android:title="@string/menu_sort"
+        android:orderInCategory="1"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_reorder_white_24dp">
+
+        <menu>
+            <group
+                android:checkableBehavior="single">
+
+                <item android:id="@+id/menu_sort_popularity"
+                      android:title="@string/menu_sort_popularity"/>
+
+                <item android:id="@+id/menu_sort_rating"
+                      android:title="@string/menu_sort_rating"/>
+
+            </group>
+        </menu>
+    </item>
+
+</menu>

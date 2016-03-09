@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/media/cleyton/CrossData1/AndroidStudioProjects/PopMovie/app/build/intermediates/res/merged/debug/mipmap-xxhdpi-v4/ic_movie_filter_white_24dp.png",
+        "source": "/media/cleyton/CrossData1/AndroidStudioProjects/PopMovie/app/src/main/res/mipmap-xxhdpi/ic_movie_filter_white_24dp.png"
+    },
+    {
+        "merged": "/media/cleyton/CrossData1/AndroidStudioProjects/PopMovie/app/build/intermediates/res/merged/debug/mipmap-xxhdpi-v4/ic_launcher.png",
+        "source": "/media/cleyton/CrossData1/AndroidStudioProjects/PopMovie/app/src/main/res/mipmap-xxhdpi/ic_launcher.png"
+    }
+]

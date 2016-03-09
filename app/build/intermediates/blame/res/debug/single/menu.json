@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "/media/cleyton/CrossData1/AndroidStudioProjects/PopMovie/app/build/intermediates/res/merged/debug/menu/menu_main_fragment.xml",
+        "source": "/media/cleyton/CrossData1/AndroidStudioProjects/PopMovie/app/src/main/res/menu/menu_main_fragment.xml"
+    },
+    {
+        "merged": "/media/cleyton/CrossData1/AndroidStudioProjects/PopMovie/app/build/intermediates/res/merged/debug/menu/menu_detail.xml",
+        "source": "/media/cleyton/CrossData1/AndroidStudioProjects/PopMovie/app/src/main/res/menu/menu_detail.xml"
+    },
+    {
+        "merged": "/media/cleyton/CrossData1/AndroidStudioProjects/PopMovie/app/build/intermediates/res/merged/debug/menu/menu_main.xml",
+        "source": "/media/cleyton/CrossData1/AndroidStudioProjects/PopMovie/app/src/main/res/menu/menu_main.xml"
+    }
+]

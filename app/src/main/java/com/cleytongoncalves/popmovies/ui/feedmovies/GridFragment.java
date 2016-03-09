@@ -16,8 +16,8 @@ import android.widget.GridView;
 
 import com.cleytongoncalves.popmovies.BuildConfig;
 import com.cleytongoncalves.popmovies.R;
+import com.cleytongoncalves.popmovies.data.models.Movie;
 import com.cleytongoncalves.popmovies.ui.detailmovie.DetailActivity;
-import com.cleytongoncalves.popmovies.ui.models.Movie;
 
 import org.json.JSONArray;
 import org.json.JSONException;

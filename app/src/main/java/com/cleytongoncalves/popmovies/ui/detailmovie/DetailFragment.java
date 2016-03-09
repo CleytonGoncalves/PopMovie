@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.cleytongoncalves.popmovies.R;
-import com.cleytongoncalves.popmovies.ui.models.Movie;
+import com.cleytongoncalves.popmovies.data.models.Movie;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
