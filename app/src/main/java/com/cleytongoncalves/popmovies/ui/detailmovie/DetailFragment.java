@@ -18,6 +18,8 @@ import butterknife.ButterKnife;
 
 
 public class DetailFragment extends Fragment {
+    private final String POSTER_BASE_URL = "http://image.tmdb.org/t/p/w185";
+
     @Bind(R.id.movie_name_detail) TextView name;
     @Bind(R.id.movie_release_year_detail) TextView releaseYear;
     @Bind(R.id.movie_rating_detail) TextView rating;
@@ -36,13 +38,13 @@ public class DetailFragment extends Fragment {
         if (callerIntent != null && callerIntent.hasExtra("movie")) {
             final Movie movie = callerIntent.getParcelableExtra("movie");
 
-            name.setText(movie.name);
-            releaseYear.setText(movie.releaseYear);
-            rating.setText(movie.rating);
-            overview.setText(movie.overview);
+            name.setText(movie.getTitle());
+            releaseYear.setText(movie.getReleaseYear());
+            rating.setText(movie.getVoteAverage());
+            overview.setText(movie.getOverview());
 
             Glide.with(this)
-                    .load(movie.posterPath)
+                    .load(POSTER_BASE_URL + movie.getPosterPath())
                     .placeholder(R.drawable.placeholder_poster)
                     .error(R.drawable.error_poster)
                     .centerCrop()
