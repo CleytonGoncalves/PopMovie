@@ -19,6 +19,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class GridViewAdapter extends ArrayAdapter {
+    private final String POSTER_BASE_URL = "http://image.tmdb.org/t/p/w185";
+
     private Context context;
     private int layoutResourceId;
     private List data;
@@ -47,14 +49,14 @@ public class GridViewAdapter extends ArrayAdapter {
         Movie item = (Movie) data.get(position);
 
         Glide.with(parent.getContext())
-                .load(item.posterPath)
+                .load(POSTER_BASE_URL + item.getPosterPath())
                 .placeholder(R.drawable.placeholder_poster)
                 .error(R.drawable.error_poster)
                 .centerCrop()
                 .crossFade()
                 .into(holder.posterView);
 
-        holder.name.setText(item.name);
+        holder.name.setText(item.getTitle());
 
         return convertView;
     }
