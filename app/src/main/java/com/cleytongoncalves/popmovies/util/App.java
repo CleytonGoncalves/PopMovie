@@ -1,4 +1,4 @@
-package com.cleytongoncalves.popmovies;
+package com.cleytongoncalves.popmovies.util;
 
 import android.app.Application;
 import android.content.Context;
