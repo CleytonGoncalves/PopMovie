@@ -1,3 +1,5 @@
+/build
+/app/build
 
 /local.properties
 /.idea/workspace.xml
