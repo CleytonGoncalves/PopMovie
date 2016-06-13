@@ -1,5 +1,5 @@
 # Projeto Popular Movies
-O objetivo do app, criado desde o início por mim, é ajudar usuários a encontrarem os filmes mais populares e/ou melhores avaliados. Ele contêm uma grade rolável de filmes, com um painel de detalhado do filme, incluindo informações como sinopse, ano de lançamento, entre outros. Ele faz uso do *Material Design* da Google, e busca informações dos filmes utilizando a [The Movie DB](http://themoviedb.org) API.
+O objetivo do app, criado desde o início por mim, é ajudar usuários a encontrarem os filmes mais populares e/ou melhores avaliados. Ele contêm uma grade rolável de filmes, com um painel de detalhado do filme, incluindo informações como sinopse, ano de lançamento, entre outros. A busca de informações dos filmes é feita utilizando a [The Movie DB](http://themoviedb.org) API.
 
 ![PopMovie App](https://dl.dropboxusercontent.com/u/31687110/telaprincipal.png "PopMovie App")
 
