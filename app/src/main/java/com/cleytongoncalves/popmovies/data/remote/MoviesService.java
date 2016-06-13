@@ -1,17 +1,13 @@
 package com.cleytongoncalves.popmovies.data.remote;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.content.Context;
 import android.util.Log;
 
-import com.cleytongoncalves.popmovies.App;
+import com.cleytongoncalves.popmovies.util.App;
 import com.cleytongoncalves.popmovies.data.models.MovieResponse;
 import com.cleytongoncalves.popmovies.ui.feedmovies.GridFragment;
 import com.github.aurae.retrofit2.LoganSquareConverterFactory;
 
 import okhttp3.Cache;
-import okhttp3.CacheControl;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
