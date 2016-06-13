@@ -3,6 +3,7 @@ package com.cleytongoncalves.popmovies.data.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
@@ -19,7 +20,7 @@ public final class Movie implements Parcelable {
 
     @JsonField private int id;
     @JsonField private String title;
-    @JsonField private String releaseDate;
+    @JsonField private Date releaseDate;
     @JsonField private String overview;
     @JsonField private String voteAverage;
     @JsonField private String posterPath;
@@ -39,8 +40,18 @@ public final class Movie implements Parcelable {
         return title;
     }
 
-    public String getReleaseDate() {
+    public Date getReleaseDate() {
         return releaseDate;
+    }
+
+    public String getReleaseYear() {
+        if (releaseDate == null || releaseDate.toString().length() < 4) {
+            releaseYear = "----";
+        } else {
+            releaseYear = releaseDate.toString();
+        }
+
+        return releaseYear;
     }
 
     public String getOverview() {
@@ -59,17 +70,8 @@ public final class Movie implements Parcelable {
         return backdropPath;
     }
 
-    /* Method used to return a proper formatted year from the releaseDate */
-    public String getReleaseYear() {
-        String releaseYear;
-
-        if (releaseDate == null || releaseDate.length() < 8) {
-            releaseYear = "----";
-        } else {
-            releaseYear = releaseDate.substring(0, 4);
-        }
-
-        return releaseYear;
+    @Override public String toString() {
+        return title + " / " + releaseDate + "\n";
     }
 
     void setId(int id) {
@@ -80,7 +82,7 @@ public final class Movie implements Parcelable {
         this.title = title;
     }
 
-    void setReleaseDate(String releaseDate) {
+    void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
     }
 
@@ -107,6 +109,7 @@ public final class Movie implements Parcelable {
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.id);
         dest.writeString(this.title);
+        dest.writeLong(this.releaseDate != null ? this.releaseDate.getTime() : - 1);
         dest.writeString(this.overview);
         dest.writeString(this.voteAverage);
         dest.writeString(this.posterPath);
@@ -117,6 +120,8 @@ public final class Movie implements Parcelable {
     protected Movie(Parcel in) {
         this.id = in.readInt();
         this.title = in.readString();
+        long tmpReleaseDate = in.readLong();
+        this.releaseDate = tmpReleaseDate == - 1 ? null : new Date(tmpReleaseDate);
         this.overview = in.readString();
         this.voteAverage = in.readString();
         this.posterPath = in.readString();
@@ -125,11 +130,11 @@ public final class Movie implements Parcelable {
     }
 
     public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
-        public Movie createFromParcel(Parcel source) {
+        @Override public Movie createFromParcel(Parcel source) {
             return new Movie(source);
         }
 
-        public Movie[] newArray(int size) {
+        @Override public Movie[] newArray(int size) {
             return new Movie[size];
         }
     };
